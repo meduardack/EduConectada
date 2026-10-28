@@ -1,5 +1,7 @@
 # 🏫 EduConectada: Diagnóstico Estatístico da Conectividade nas Escolas Públicas Brasileiras
 
+> 🌐 **Language / Idioma:** [English](README_en.md) • **Português**
+
 ![Python](https://img.shields.io/badge/Python-Pandas_%7C_Seaborn_%7C_Scikit--Learn-3776AB?logo=python&logoColor=white)
 ![Statistics](https://img.shields.io/badge/Estatística-Probabilidade_%7C_Inferência_%7C_TCL-8A2BE2)
 ![Dataset](https://img.shields.io/badge/Escolas_Analisadas-137.914-success)
