@@ -6,20 +6,20 @@
 ![Statistics](https://img.shields.io/badge/Estatistica-Probabilidade_%7C_Inferencia_%7C_TCL-8A2BE2)
 ![Dataset](https://img.shields.io/badge/Escolas_Analisadas-137.914-success)
 
-> **Resumo Executivo:** Este projeto analisa a infraestrutura de internet nas escolas publicas de educacao basica do Brasil a partir da base **EduConectada (137.914 escolas)** e das medicoes ativas de trafego do medidor **SIMET (76.359 escolas com medicoes validas)**. Combinando analise exploratoria, espacos amostrais (Omega 1 e Omega 2), probabilidade condicional, funcoes de distribuicao acumulada e simulacao do **Teorema Central do Limite**, o estudo responde a questoes criticas de infraestrutura: **existe diferenca na qualidade de conexao entre escolas urbanas e rurais, e a velocidade entregue atende a demanda estimada para os estudantes?**
+> **Resumo Executivo:** Este projeto analisa a infraestrutura de internet nas escolas publicas de educacao basica do Brasil a partir da base **EduConectada (137.914 escolas)** e das medicoes ativas de trafego do medidor **SIMET (76.359 escolas com medicoes validas)**. Combinando analise exploratoria, espacos amostrais (Ω1 e Ω2), probabilidade condicional, funcoes de distribuicao acumulada e simulacao do **Teorema Central do Limite**, o estudo responde a questoes criticas de infraestrutura: **existe diferenca na qualidade de conexao entre escolas urbanas e rurais, e a velocidade entregue atende a demanda estimada para os estudantes?**
 
 ---
 
-## 1. Contexto e Delimitacao dos Espacos Amostrais (Omega 1 vs. Omega 2)
+## 1. Contexto e Delimitacao dos Espacos Amostrais (Ω1 vs. Ω2)
 
 Ao auditar as **137.914 escolas** da base (comparadas com o Censo Escolar), constatou-se que variaveis cadastrais (localizacao, rede, porte e matriculas) possuem cobertura quase integral, enquanto as medicoes empíricas de rede estao disponiveis apenas para um subconjunto de unidades. 
 
 Para viabilizar a analise do proprio objeto de estudo — a conexao real e a qualidade do trafego de internet —, foram estruturados dois espacos amostrais:
 
-- **Omega 1 (137.914 escolas):** Universo cadastral completo para analise de infraestrutura fisica, distribuicao geografica e presenca declarada de internet (`indicador_internet`).
-- **Omega 2 (76.359 escolas):** Subconjunto de escolas com internet declarada e medicao valida de desempenho TCP via SIMET (`media_tcp_download`, `media_tcp_upload`, `media_latencia`, `media_jitter_upload`). 
+- **Ω1 (137.914 escolas):** Universo cadastral completo para analise de infraestrutura fisica, distribuicao geografica e presenca declarada de internet (`indicador_internet`).
+- **Ω2 (76.359 escolas):** Subconjunto de escolas com internet declarada e medicao valida de desempenho TCP via SIMET (`media_tcp_download`, `media_tcp_upload`, `media_latencia`, `media_jitter_upload`). 
 
-> **Nota metodologica sobre vies de selecao:** A delimitacao de Omega 2 nao teve como objetivo eliminar vieses, uma vez que a presenca de medidores ativos pode concentrar escolas com melhor infraestrutura preexistente. A segmentacao foi desenhada para permitir investigar empiricamente o comportamento do trafego de dados onde ha medicao real.
+> **Nota metodologica sobre vies de selecao:** A delimitacao de Ω2 nao teve como objetivo eliminar vieses, uma vez que a presenca de medidores ativos pode concentrar escolas com melhor infraestrutura preexistente. A segmentacao foi desenhada para permitir investigar empiricamente o comportamento do trafego de dados onde ha medicao real.
 
 ![Vies de Selecao e Representatividade](./reports/figures/fig_09_vies_selecao_omega2.png)
 
