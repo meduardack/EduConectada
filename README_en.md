@@ -12,13 +12,13 @@
 
 ## 📊 Visual Analysis Preview
 
-| Bandwidth Distribution (Urban vs. Rural) | Demand Fulfillment by Location and School Size |
+| Bandwidth Distribution (Urban vs. Rural) | Fulfillment Paradox (Conditional Probability) |
 | :---: | :---: |
-| ![Urban vs Rural](./reports/figures/cell_068_plot_08.png) | ![Demand Fulfillment](./reports/figures/cell_089_plot_10.png) |
+| ![Urban vs Rural](./reports/figures/fig_05_velocidade_urbana_vs_rural.png) | ![Fulfillment Paradox](./reports/figures/fig_07_paradoxo_atendimento_urbano_rural.png) |
 
-| Feature Scaling (`StandardScaler` vs `MinMaxScaler`) | Sampling Distribution & Central Limit Theorem |
+| Download vs. Upload Dynamics (TCP Telemetry) | Cumulative Probability by School Size |
 | :---: | :---: |
-| ![Feature Scaling](./reports/figures/cell_103_plot_14.png) | ![Central Limit Theorem](./reports/figures/cell_110_plot_21.png) |
+| ![Download vs Upload](./reports/figures/fig_03_relacao_download_upload.png) | ![School Size CDF](./reports/figures/fig_08_porte_escolas_probabilidade_acumulada.png) |
 
 ---
 
@@ -34,15 +34,15 @@ When auditing the **137,914 schools** in the registry (benchmarked against ~136,
 ## 2. Core Statistical Findings
 
 ### A. Positive Skewness & The Limitation of Unweighted Averages
-- Both `media_tcp_download` and `media_tcp_upload` exhibit **heavy right-skewed distributions (long right tails)**. A small fraction of schools equipped with high-capacity fiber links inflates the arithmetic mean, obscuring the bandwidth constraints faced by the median school.
-- Strong positive correlation between download and upload speed ($r = 0.69$), displaying diagonal heteroscedastic fan dispersion, alongside tight coupling between latency and jitter.
+- Both `media_tcp_download` and `media_tcp_upload` exhibit **heavy right-skewed distributions (long right tails)** (`fig_04_distribuicao_cauda_longa_download.png`). A small fraction of schools equipped with high-capacity fiber links inflates the arithmetic mean, obscuring the bandwidth constraints faced by the median school.
+- Strong positive correlation between download and upload speed ($r = 0.69$), displaying diagonal heteroscedastic fan dispersion (`fig_03_relacao_download_upload.png`), alongside tight coupling between latency and jitter (`fig_02_matriz_correlacao_metricas.png`).
 
 ### B. The Urban-Rural Paradox (Conditional Probability)
-1. **Raw Bandwidth (Median):** Urban schools register a median download speed roughly **twice as high** as rural schools (`cell_068_plot_08.png`).
+1. **Raw Bandwidth (Median):** Urban schools register a median download speed roughly **twice as high** as rural schools (`fig_05_velocidade_urbana_vs_rural.png`).
 2. **Per-Student Demand Fulfillment (`diferenca_download`):** When contrasting delivered throughput with `velocidade_download_necessaria` (modeled to allow 50% of enrolled students to stream concurrent instructional video):
-   - The overwhelming majority of Brazilian schools **fail to meet** estimated pedagogical demand.
-   - Evaluating conditional probability ($P(\text{Sufficient} \mid \text{Location})$) uncovers a counterintuitive finding: **30.17% of rural schools meet estimated demand, compared to only 21.64% of urban schools** (`cell_089_plot_10.png`).
-   - **Underlying Mechanism:** Although urban schools receive higher aggregate Mbps links, they host substantially larger student bodies, resulting in acute per-student bandwidth deficits that occur more frequently than in smaller, sparsely enrolled rural schools.
+   - The overwhelming majority of Brazilian schools **fail to meet** estimated pedagogical demand (`fig_06_velocidade_necessaria_vs_entregue.png`).
+   - Evaluating conditional probability ($P(\text{Sufficient} \mid \text{Location})$) uncovers a counterintuitive finding: **30.17% of rural schools meet estimated demand, compared to only 21.64% of urban schools** (`fig_07_paradoxo_atendimento_urbano_rural.png`).
+   - **Underlying Mechanism:** Although urban schools receive higher aggregate Mbps links, they host substantially larger student bodies, resulting in acute per-student bandwidth deficits that occur more frequently than in smaller, sparsely enrolled rural schools (`fig_08_porte_escolas_probabilidade_acumulada.png`).
 
 ### C. Machine Learning Preprocessing & Central Limit Theorem
 - **Feature Scaling:** Practical comparison between `StandardScaler` ($\mu = 0, \sigma = 1$) and `MinMaxScaler` ($[0, 1]$) across widely disparate scales (student enrollment counts vs. Mbps throughput), preserving the underlying distribution geometry (`cell_103_plot_14.png`).

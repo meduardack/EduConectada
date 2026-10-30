@@ -12,13 +12,13 @@
 
 ## 📊 Preview Visual das Análises
 
-| Distribuição de Velocidade (Urbana vs. Rural) | Atendimento à Demanda por Localização e Porte |
+| Distribuição de Velocidade (Urbana vs. Rural) | Paradoxo de Atendimento (Probabilidade Condicional) |
 | :---: | :---: |
-| ![Urbano vs Rural](./reports/figures/cell_068_plot_08.png) | ![Atendimento Demanda](./reports/figures/cell_089_plot_10.png) |
+| ![Urbano vs Rural](./reports/figures/fig_05_velocidade_urbana_vs_rural.png) | ![Paradoxo Atendimento](./reports/figures/fig_07_paradoxo_atendimento_urbano_rural.png) |
 
-| Normalização (`StandardScaler` vs `MinMaxScaler`) | Distribuição Amostral & Teorema Central do Limite |
+| Relação Download & Upload (Tráfego TCP) | Distribuição Acumulada por Porte Escolar |
 | :---: | :---: |
-| ![Normalização](./reports/figures/cell_103_plot_14.png) | ![Teorema Central do Limite](./reports/figures/cell_110_plot_21.png) |
+| ![Download vs Upload](./reports/figures/fig_03_relacao_download_upload.png) | ![Porte Escolas](./reports/figures/fig_08_porte_escolas_probabilidade_acumulada.png) |
 
 ---
 
@@ -34,15 +34,15 @@ Ao auditar as **137.914 escolas** da base (comparadas frente às ~136,7 mil esco
 ## 2. Principais Descobertas Estatísticas
 
 ### A. Assimetria Positiva e o Perigo das Médias Isoladas
-- As distribuições de `media_tcp_download` e `media_tcp_upload` apresentam **forte assimetria positiva (cauda longa à direita)**. Poucas escolas com links de altíssima velocidade puxam a média para cima, escondendo a realidade da maioria das unidades escolares.
-- Forte correlação positiva entre download e upload ($r = 0.69$), formando um comportamento em "leque" diagonal, e alta associação entre latência e jitter.
+- As distribuições de `media_tcp_download` e `media_tcp_upload` apresentam **forte assimetria positiva (cauda longa à direita)** (`fig_04_distribuicao_cauda_longa_download.png`). Poucas escolas com links de altíssima velocidade puxam a média para cima, escondendo a realidade da maioria das unidades escolares.
+- Forte correlação positiva entre download e upload ($r = 0.69$), formando um comportamento em "leque" diagonal (`fig_03_relacao_download_upload.png`), e alta associação entre latência e jitter (`fig_02_matriz_correlacao_metricas.png`).
 
 ### B. O Paradoxo Urbano vs. Rural (Probabilidade Condicional)
-1. **Velocidade Bruta (Mediana):** As escolas **urbanas** possuem uma mediana de velocidade de download aproximadamente **o dobro** da mediana das escolas **rurais** (`cell_068_plot_08.png`).
+1. **Velocidade Bruta (Mediana):** As escolas **urbanas** possuem uma mediana de velocidade de download aproximadamente **o dobro** da mediana das escolas **rurais** (`fig_05_velocidade_urbana_vs_rural.png`).
 2. **Atendimento à Necessidade por Aluno (`diferenca_download`):** Quando cruzamos a velocidade entregue com a `velocidade_download_necessaria` (estimada para que 50% dos alunos assistam a um vídeo simultaneamente, proporcional ao porte de matrículas da escola):
-   - A grande maioria das escolas brasileiras **não atende** à demanda necessária.
-   - Usando **probabilidade condicional** ($P(\text{Atende} \mid \text{Localização})$), descobrimos um achado contraintuitivo: **30,17% das escolas rurais atendem à necessidade estimada, contra apenas 21,64% das escolas urbanas** (`cell_089_plot_10.png`).
-   - **Explicação (Função de Repartição de Porte):** Embora as escolas urbanas tenham links maiores em Mbps absolutos, elas concentram portes muito maiores de alunos matriculados, fazendo com que a largura de banda por estudante seja insuficiente com maior frequência do que nas pequenas escolas rurais.
+   - A grande maioria das escolas brasileiras **não atende** à demanda necessária (`fig_06_velocidade_necessaria_vs_entregue.png`).
+   - Usando **probabilidade condicional** ($P(\text{Atende} \mid \text{Localização})$), descobrimos um achado contraintuitivo: **30,17% das escolas rurais atendem à necessidade estimada, contra apenas 21,64% das escolas urbanas** (`fig_07_paradoxo_atendimento_urbano_rural.png`).
+   - **Explicação (Função de Repartição de Porte):** Embora as escolas urbanas tenham links maiores em Mbps absolutos, elas concentram portes muito maiores de alunos matriculados, fazendo com que a largura de banda por estudante seja insuficiente com maior frequência do que nas pequenas escolas rurais (`fig_08_porte_escolas_probabilidade_acumulada.png`).
 
 ### C. Preparação para Machine Learning e Teorema Central do Limite
 - **Escalonamento de Variáveis:** Comparação prática entre `StandardScaler` ($\mu = 0, \sigma = 1$) e `MinMaxScaler` ($[0, 1]$) sobre variáveis de escalas díspares (matrículas vs. Mbps), demonstrando a preservação da forma da distribuição original (`cell_103_plot_14.png`).
